@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using GastoEnergetico.Data;
+using GastoEnergetico.Models;
 using GastoEnergetico.Models.Categorias;
-using GastoEnergetico.Models.Gastos;
 using GastoEnergetico.Models.Itens;
 using GastoEnergetico.Models.Parametros;
 using Microsoft.AspNetCore.Builder;
@@ -36,10 +36,10 @@ namespace GastoEnergetico
                 
                 );
 
-            services.AddTransient<GastosService>();
+            services.AddTransient<CategoriasService>();
             services.AddTransient<ItensService>();
             services.AddTransient<ParametrosService>();
-            services.AddTransient<CategoriaService>();
+            services.AddTransient<AnalisesService>();
 
 
         }
@@ -69,7 +69,7 @@ namespace GastoEnergetico
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Gasto}/{action=Index}/{id?}");
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }

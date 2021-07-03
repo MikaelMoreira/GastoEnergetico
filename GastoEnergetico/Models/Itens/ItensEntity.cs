@@ -1,31 +1,43 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using GastoEnergetico.Models.Categorias;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace GastoEnergetico.Models.Itens
 {
     public class ItensEntity
     {
-        [Key] public int id { get; set; }
-        public int CategoriaId  { get; set; }
+        public int Id { get; set; }
+        public CategoriasEntity Categoria { get; set; }
         public string Nome { get; set; }
         public string Descricao { get; set; }
         public DateTime DataFabricacao { get; set; }
-        public decimal ConsumoWatts  { get; set; }
-        public int  HorasUsoDiario { get; set; }
+        public decimal ConsumoWatts { get; set; }
+        public int HorasUsoDiario { get; set; }
 
         public ItensEntity()
         {
         }
 
-        public ItensEntity(int id, int categoriaId, string nome, string descricao, DateTime dataFabricacao, decimal consumoWatts, int horasUsoDiario)
+        public ItensEntity(int id, CategoriasEntity categoria, string nome, string descricao, DateTime dataFabricacao, decimal consumoWatts, int horasUsoDiario)
         {
-            this.id = id;
-            CategoriaId = categoriaId;
+            Id = id;
+            Categoria = categoria;
             Nome = nome;
             Descricao = descricao;
             DataFabricacao = dataFabricacao;
             ConsumoWatts = consumoWatts;
             HorasUsoDiario = horasUsoDiario;
+        }
+
+        public decimal CalcularGastoEnergeticoMensalKwh()
+        {
+            return ((ConsumoWatts * HorasUsoDiario) * 30) / 1000;
+        }
+        public decimal CalcularGastoEnergeticoMensalWatts()
+        {
+            return ((ConsumoWatts * HorasUsoDiario) * 30);
         }
     }
 }

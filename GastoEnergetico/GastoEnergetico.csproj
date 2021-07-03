@@ -5,13 +5,38 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <Compile Remove="ViewModels\Gasto\**" />
+      <Content Remove="ViewModels\Gasto\**" />
+      <EmbeddedResource Remove="ViewModels\Gasto\**" />
+      <None Remove="ViewModels\Gasto\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Remove="Controllers\GastoController.cs" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Remove="Views\Parametros\adicionar.cshtml" />
+      <Content Remove="Views\Parametros\editar.cshtml" />
+      <Content Remove="Views\Parametros\Index.cshtml" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Include="Views\Parametros\editar.cshtml" />
+      <None Include="Views\Parametros\Index.cshtml" />
+      <None Include="Views\Parametros\adicionar.cshtml" />
       <None Include="wwwroot\css\estilo.css" />
     </ItemGroup>
 
     <ItemGroup>
       <PackageReference Include="HTML5.HTML5Shiv" Version="3.7.2" />
-      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.6" />
-      <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="5.0.0" />
+      <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.7" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.7" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.7">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
+      <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="5.0.1" />
     </ItemGroup>
 
 </Project>

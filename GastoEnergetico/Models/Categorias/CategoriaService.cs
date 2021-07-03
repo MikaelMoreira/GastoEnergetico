@@ -1,5 +1,5 @@
 ﻿using GastoEnergetico.Data;
-using GastoEnergetico.Models.Gastos;
+using Microsoft.VisualBasic.CompilerServices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,35 +7,102 @@ using System.Threading.Tasks;
 
 namespace GastoEnergetico.Models.Categorias
 {
-    public class CategoriaService
+    public class CategoriasService : IDadosBasicosCategoriaModel
     {
-        private readonly DatabaseContext _databaseContext;
+        public string Id { get; set; }
+        public string Descricao { get; set; }
+        public string CategoriaPaiId { get; set; }
 
-        public CategoriaService(DatabaseContext databaseContext)
+        private readonly DatabaseContext _dataBaseContext;
+
+        public CategoriasService(DatabaseContext dataBaseContext)
         {
-            _databaseContext = databaseContext;
+            _dataBaseContext = dataBaseContext;
         }
 
 
-        public ICollection<CategoriasEntity> obterTodos()
+        public ICollection<CategoriasEntity> BuscarTodos()
         {
-            return _databaseContext.Categorias.ToList(); //trazer só ela mesmo
+            return _dataBaseContext.Categorias.ToList();
         }
-
 
         public CategoriasEntity ObterPorId(int id)
         {
+            return _dataBaseContext.Categorias.
+                Find(id);
+        }
+
+        public CategoriasEntity Adicionar(IDadosBasicosCategoriaModel dadosBasicos)
+        {
+            var novaEntidade = ValidarDadosBasicos(dadosBasicos);
+            _dataBaseContext.Categorias.Add(novaEntidade);
+            _dataBaseContext.SaveChanges();
+
+            return novaEntidade;
+        }
+
+        public CategoriasEntity Remover(int id)
+        {
+            var categoriaEntity = ObterPorId(id);
+            _dataBaseContext.Categorias.Remove(categoriaEntity);
+            _dataBaseContext.SaveChanges();
+            return categoriaEntity;
+        }
+        public CategoriasEntity Editar(
+            int id,
+            IDadosBasicosCategoriaModel dadosBasicos
+        )
+        {
+            var entidadeAEditar = ObterPorId(id);
+
+            entidadeAEditar = ValidarDadosBasicos(dadosBasicos, entidadeAEditar);
+            _dataBaseContext.SaveChanges();
+
+            return entidadeAEditar;
+        }
+
+        private CategoriasEntity ValidarDadosBasicos(
+            IDadosBasicosCategoriaModel dadosBasicosP,
+            CategoriasEntity entidadeExistente = null
+        )
+        {
+            var entidade = entidadeExistente ?? new CategoriasEntity();
+
+            if (dadosBasicosP.Descricao == null || dadosBasicosP.CategoriaPaiId == null)
+            {
+                throw new Exception("Campo obrigatório.");
+            }
 
             try
             {
-                return _databaseContext.Categorias.Find(id);
-            } catch
+                var valor = dadosBasicosP.Descricao;
+                entidade.Descricao = valor;
+            }
+            catch (Exception e)
             {
-                throw new Exception("Categoria de ID #" + id + "não encontrada");
-
+                throw new Exception("Verifique a informação digitada.");
             }
 
-        }
+            try
+            {
+                var valor = IntegerType.FromString(dadosBasicosP.CategoriaPaiId);
+                entidade.CategoriaPaiId = valor;
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Informe um valor númerico.");
+            }
 
+
+            return entidade;
+        }
+    }
+
+
+    public interface IDadosBasicosCategoriaModel
+    {
+        public string Id { get; set; }
+        public string Descricao { get; set; }
+        public string CategoriaPaiId { get; set; }
     }
 }

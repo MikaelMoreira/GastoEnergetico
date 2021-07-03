@@ -1,10 +1,14 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace GastoEnergetico.Models.Categorias
 {
     public class CategoriasEntity
     {
-        [Key] public int id { get; set; }
+
+        public int Id { get; set; }
         public string Descricao { get; set; }
         public int CategoriaPaiId { get; set; }
 
@@ -14,9 +18,10 @@ namespace GastoEnergetico.Models.Categorias
 
         public CategoriasEntity(int id, string descricao, int categoriaPaiId)
         {
-            this.id = id;
+            Id = id;
             Descricao = descricao;
             CategoriaPaiId = categoriaPaiId;
         }
+
     }
 }
