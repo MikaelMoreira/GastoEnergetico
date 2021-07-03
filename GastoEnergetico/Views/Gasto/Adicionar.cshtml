@@ -1,0 +1,50 @@
+﻿@{
+    ViewData["Title"] = "Adicionar";
+}
+
+<hr/>
+<a href="/">Voltar</a>
+<hr/>
+
+
+@*@if (Model.FormMensagemErro != null)
+{
+     <ul>
+         @foreach (var msgErro in Model.FormMensagensErro)
+                {
+                    <li>@msgErro</li>
+                }
+     </ul>            
+}*@
+
+
+<form action="/Gasto/Adicionar" method="post">
+
+    <div>
+        <label for="descricao">Descricao</label>
+        <input id="descricao" name="descricao" type="text">
+    </div>
+    <div>
+        <label for="data">Data</label>
+        <input id="data" name="data" type="date">
+    </div>
+    <div>
+        <label for="categoria">Categoria</label>
+        <select id="categoria" asp-items="Model.Categorias"></select>
+    </div>
+
+    <div>
+        <label for="valor">Valor</label>
+        <input id="valor" name="valor" type="text">
+    </div>
+
+    <div>
+        <input id="recorrente" name="recorrente" type="text" value="true">
+        <label for="recorrente">Ocorre todo mês</label>
+    </div>
+
+    <div>
+        <input  name="confirmar" type="submit" value="Confirmar">
+       
+    </div>
+</form>

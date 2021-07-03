@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using GastoEnergetico.Data;
+using GastoEnergetico.Models.Categorias;
+using GastoEnergetico.Models.Gastos;
+using GastoEnergetico.Models.Itens;
+using GastoEnergetico.Models.Parametros;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -28,9 +32,16 @@ namespace GastoEnergetico
             services.AddControllersWithViews();
             var serverVersion = new MySqlServerVersion(new Version(8, 0, 25));
             services.AddDbContext<DatabaseContext>(options => 
-                options.UseMySql(Configuration.GetConnectionString("MGEDb"), serverVersion)
+                options.UseMySql(Configuration.GetConnectionString("Mariadb"), serverVersion)
                 
                 );
+
+            services.AddTransient<GastosService>();
+            services.AddTransient<ItensService>();
+            services.AddTransient<ParametrosService>();
+            services.AddTransient<CategoriaService>();
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

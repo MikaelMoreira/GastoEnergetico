@@ -9,6 +9,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <PackageReference Include="HTML5.HTML5Shiv" Version="3.7.2" />
       <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.6" />
       <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="5.0.0" />
     </ItemGroup>
